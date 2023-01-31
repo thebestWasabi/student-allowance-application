@@ -1,5 +1,9 @@
 package ru.wasabi;
 
+import ru.wasabi.validator.CityRegisterValidator;
+
+import static ru.wasabi.validator.CityRegisterValidator.checkCityRegister;
+
 public class StudentOrderValidator {
 
     public static void main(String[] args) {
@@ -15,7 +19,7 @@ public class StudentOrderValidator {
                 break;
             }
             AnswerCityRegister answerCityRegister = checkCityRegister(studentOrder);
-            if (!answerCityRegister.success) {
+            if (!answerCityRegister.isSuccess()) {
                 System.out.println("В реестре населения указанный человек не найден");
                 continue;
             }
@@ -31,12 +35,10 @@ public class StudentOrderValidator {
         return studentOrder;
     }
 
-    private static AnswerCityRegister checkCityRegister(StudentOrder studentOrder) {
-        System.out.println("CityRegister check is running");
-        AnswerCityRegister answer = new AnswerCityRegister();
-        answer.success = false;
-        return answer;
+    public static AnswerCityRegister checkCityRegister(StudentOrder studentOrder) {
+        return CityRegisterValidator.checkCityRegister(studentOrder);
     }
+
 
     private static AnswerWedding checkWedding(StudentOrder studentOrder) {
         System.out.println("Wedding check is running");

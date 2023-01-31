@@ -1,5 +1,10 @@
 package ru.wasabi;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class AnswerCityRegister {
-    boolean success;
+    private boolean success;
 }
