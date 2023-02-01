@@ -1,10 +1,13 @@
 package ru.wasabi;
 
+import ru.wasabi.validator.ChildrenValidator;
 import ru.wasabi.validator.CityRegisterValidator;
+import ru.wasabi.validator.StudentValidator;
+import ru.wasabi.validator.WeddingValidator;
 
-import static ru.wasabi.validator.CityRegisterValidator.checkCityRegister;
+import java.util.Random;
 
-public class StudentOrderValidator {
+public class StudentOrderChecker {
 
     public static void main(String[] args) {
         checkAll();
@@ -35,27 +38,21 @@ public class StudentOrderValidator {
         return studentOrder;
     }
 
-    public static AnswerCityRegister checkCityRegister(StudentOrder studentOrder) {
+    private static AnswerCityRegister checkCityRegister(StudentOrder studentOrder) {
         return CityRegisterValidator.checkCityRegister(studentOrder);
     }
 
 
     private static AnswerWedding checkWedding(StudentOrder studentOrder) {
-        System.out.println("Wedding check is running");
-        AnswerWedding answer = new AnswerWedding();
-        return answer;
+        return WeddingValidator.checkWedding(studentOrder);
     }
 
     private static AnswerChildren checkChildren(StudentOrder studentOrder) {
-        System.out.println("Children Check is running");
-        AnswerChildren answer = new AnswerChildren();
-        return answer;
+        return ChildrenValidator.checkChildren(studentOrder);
     }
 
     private static AnswerStudent checkStudent(StudentOrder studentOrder) {
-        System.out.println("Student check is running");
-        AnswerStudent answer = new AnswerStudent();
-        return answer;
+       return StudentValidator.checkStudent(studentOrder);
     }
 
     private static void sendMail(StudentOrder studentOrder) {
