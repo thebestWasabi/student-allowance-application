@@ -1,12 +1,12 @@
 package ru.wasabi;
 
+import lombok.extern.slf4j.Slf4j;
 import ru.wasabi.validator.ChildrenValidator;
 import ru.wasabi.validator.CityRegisterValidator;
 import ru.wasabi.validator.StudentValidator;
 import ru.wasabi.validator.WeddingValidator;
 
-import java.util.Random;
-
+@Slf4j
 public class StudentOrderChecker {
 
     public static void main(String[] args) {
@@ -18,28 +18,30 @@ public class StudentOrderChecker {
 
         while (true) {
             if (studentOrder == null) {
-                System.out.println("Заявка не найдена");
+                log.error("Заявка не найдена");
                 break;
             }
             AnswerCityRegister answerCityRegister = checkCityRegister(studentOrder);
             if (!answerCityRegister.isSuccess()) {
-                System.out.println("В реестре населения указанный человек не найден");
-                continue;
+                log.error("В реестре населения запрашиваемый человек не найден");
+                break;
             }
             AnswerWedding answerWedding = checkWedding(studentOrder);
             AnswerChildren answerChildren = checkChildren(studentOrder);
             AnswerStudent answerStudent = checkStudent(studentOrder);
-            sendMail(studentOrder);
+            sendMail();
         }
     }
 
     private static StudentOrder readStudentOrder() {
-        StudentOrder studentOrder = new StudentOrder();
-        return studentOrder;
+        return new StudentOrder();
     }
 
     private static AnswerCityRegister checkCityRegister(StudentOrder studentOrder) {
-        return CityRegisterValidator.checkCityRegister(studentOrder);
+        CityRegisterValidator cityRegisterValidator = new CityRegisterValidator();
+        cityRegisterValidator.setHostName("Host1");
+        AnswerCityRegister answerCityRegister1 = cityRegisterValidator.checkCityRegister(studentOrder);
+        return answerCityRegister1;
     }
 
 
@@ -55,7 +57,7 @@ public class StudentOrderChecker {
        return StudentValidator.checkStudent(studentOrder);
     }
 
-    private static void sendMail(StudentOrder studentOrder) {
-        System.out.println("The email has been sent");
+    private static void sendMail() {
+        log.info("Почта отправлена");
     }
 }

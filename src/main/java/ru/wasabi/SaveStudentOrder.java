@@ -1,5 +1,8 @@
 package ru.wasabi;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class SaveStudentOrder {
 
     public static void main(String[] args) {
@@ -10,12 +13,12 @@ public class SaveStudentOrder {
         studentOrder.setWifeLastName("Ветрова");
 
         long answer = saveStudentOrder(studentOrder);
-        System.out.println(answer);
+        log.info("Ответ: {}", answer);
     }
 
     static long saveStudentOrder(StudentOrder studentOrder) {
         long answer = 199;
-        System.out.println("saveStudentOrder: " + studentOrder.getHusbandLastName());
+        log.info("saveStudentOrder: {}", studentOrder.getHusbandLastName());
         return answer;
     }
 }
