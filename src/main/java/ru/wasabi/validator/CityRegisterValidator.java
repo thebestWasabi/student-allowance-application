@@ -5,8 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import ru.wasabi.AnswerCityRegister;
-import ru.wasabi.StudentOrder;
+import ru.wasabi.answer.AnswerCityRegister;
+import ru.wasabi.domain.StudentOrder;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Slf4j

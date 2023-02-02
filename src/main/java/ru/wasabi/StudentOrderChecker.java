@@ -1,10 +1,12 @@
 package ru.wasabi;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.wasabi.validator.ChildrenValidator;
-import ru.wasabi.validator.CityRegisterValidator;
-import ru.wasabi.validator.StudentValidator;
-import ru.wasabi.validator.WeddingValidator;
+import ru.wasabi.answer.AnswerChildren;
+import ru.wasabi.answer.AnswerCityRegister;
+import ru.wasabi.answer.AnswerStudent;
+import ru.wasabi.answer.AnswerWedding;
+import ru.wasabi.domain.*;
+import ru.wasabi.validator.*;
 
 @Slf4j
 public class StudentOrderChecker {
@@ -15,7 +17,6 @@ public class StudentOrderChecker {
 
     static void checkAll() {
         StudentOrder studentOrder = readStudentOrder();
-
         while (true) {
             if (studentOrder == null) {
                 log.error("Заявка не найдена");
@@ -23,7 +24,7 @@ public class StudentOrderChecker {
             }
             AnswerCityRegister answerCityRegister = checkCityRegister(studentOrder);
             if (!answerCityRegister.isSuccess()) {
-                log.error("В реестре населения запрашиваемый человек не найден");
+                log.info("В реестре населения запрашиваемый человек не найден");
                 break;
             }
             AnswerWedding answerWedding = checkWedding(studentOrder);
@@ -38,26 +39,27 @@ public class StudentOrderChecker {
     }
 
     private static AnswerCityRegister checkCityRegister(StudentOrder studentOrder) {
-        CityRegisterValidator cityRegisterValidator = new CityRegisterValidator();
-        cityRegisterValidator.setHostName("Host1");
-        AnswerCityRegister answerCityRegister1 = cityRegisterValidator.checkCityRegister(studentOrder);
-        return answerCityRegister1;
+        CityRegisterValidator validator = new CityRegisterValidator();
+        validator.setHostName("Host1");
+        return validator.checkCityRegister(studentOrder);
     }
 
-
     private static AnswerWedding checkWedding(StudentOrder studentOrder) {
-        return WeddingValidator.checkWedding(studentOrder);
+        WeddingValidator validator = new WeddingValidator();
+        return validator.checkWedding(studentOrder);
     }
 
     private static AnswerChildren checkChildren(StudentOrder studentOrder) {
-        return ChildrenValidator.checkChildren(studentOrder);
+        ChildrenValidator validator = new ChildrenValidator();
+        return validator.checkChildren(studentOrder);
     }
 
     private static AnswerStudent checkStudent(StudentOrder studentOrder) {
-       return StudentValidator.checkStudent(studentOrder);
+        StudentValidator validator = new StudentValidator();
+        return validator.checkStudent(studentOrder);
     }
 
     private static void sendMail() {
-        log.info("Почта отправлена");
+        MailSender.sendMail();
     }
 }
