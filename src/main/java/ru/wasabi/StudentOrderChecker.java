@@ -11,55 +11,65 @@ import ru.wasabi.validator.*;
 @Slf4j
 public class StudentOrderChecker {
 
-    public static void main(String[] args) {
-        checkAll();
+    private final CityRegisterValidator cityRegisterValidator;
+    private final WeddingValidator weddingValidator;
+    private final ChildrenValidator childrenValidator;
+    private final StudentValidator studentValidator;
+    private final MailSender mailSender;
+
+    public StudentOrderChecker() {
+        this.cityRegisterValidator = new CityRegisterValidator();
+        this.weddingValidator = new WeddingValidator();
+        this.childrenValidator = new ChildrenValidator();
+        this.studentValidator = new StudentValidator();
+        this.mailSender = new MailSender();
     }
 
-    static void checkAll() {
-        StudentOrder studentOrder = readStudentOrder();
-        while (true) {
-            if (studentOrder == null) {
-                log.error("Заявка не найдена");
-                break;
-            }
-            AnswerCityRegister answerCityRegister = checkCityRegister(studentOrder);
-            if (!answerCityRegister.isSuccess()) {
-                log.info("В реестре населения запрашиваемый человек не найден");
-                break;
-            }
-            AnswerWedding answerWedding = checkWedding(studentOrder);
-            AnswerChildren answerChildren = checkChildren(studentOrder);
-            AnswerStudent answerStudent = checkStudent(studentOrder);
-            sendMail();
+    public static void main(String[] args) {
+        StudentOrderChecker studentOrderChecker = new StudentOrderChecker();
+        studentOrderChecker.checkAll();
+    }
+
+    public void checkAll() {
+        StudentOrder[] studentOrderArray = readStudentOrder();
+        for (StudentOrder studentOrder : studentOrderArray) {
+            checkOneOrder(studentOrder);
         }
     }
 
-    private static StudentOrder readStudentOrder() {
-        return new StudentOrder();
+    private StudentOrder[] readStudentOrder() {
+        StudentOrder[] studentOrderArray = new StudentOrder[3];
+        for (int i = 0; i < studentOrderArray.length; i++) {
+            studentOrderArray[i] = SaveStudentOrder.buildStudentOrder(i);
+        }
+        return studentOrderArray;
     }
 
-    private static AnswerCityRegister checkCityRegister(StudentOrder studentOrder) {
-        CityRegisterValidator validator = new CityRegisterValidator();
-        validator.setHostName("Host1");
-        return validator.checkCityRegister(studentOrder);
+    public void checkOneOrder(StudentOrder studentOrder) {
+        AnswerCityRegister answerCityRegister = checkCityRegister(studentOrder);
+        AnswerWedding answerWedding = checkWedding(studentOrder);
+        AnswerChildren answerChildren = checkChildren(studentOrder);
+        AnswerStudent answerStudent = checkStudent(studentOrder);
+        sendMail();
     }
 
-    private static AnswerWedding checkWedding(StudentOrder studentOrder) {
-        WeddingValidator validator = new WeddingValidator();
-        return validator.checkWedding(studentOrder);
+    private AnswerCityRegister checkCityRegister(StudentOrder studentOrder) {
+        return cityRegisterValidator.checkCityRegister(studentOrder);
     }
 
-    private static AnswerChildren checkChildren(StudentOrder studentOrder) {
-        ChildrenValidator validator = new ChildrenValidator();
-        return validator.checkChildren(studentOrder);
+    private AnswerWedding checkWedding(StudentOrder studentOrder) {
+        return weddingValidator.checkWedding(studentOrder);
     }
 
-    private static AnswerStudent checkStudent(StudentOrder studentOrder) {
-        StudentValidator validator = new StudentValidator();
-        return validator.checkStudent(studentOrder);
+    private AnswerChildren checkChildren(StudentOrder studentOrder) {
+        return childrenValidator.checkChildren(studentOrder);
     }
 
-    private static void sendMail() {
-        MailSender.sendMail();
+    private AnswerStudent checkStudent(StudentOrder studentOrder) {
+        return studentValidator.checkStudent(studentOrder);
+    }
+
+    private void sendMail() {
+        mailSender.sendMail();
     }
 }

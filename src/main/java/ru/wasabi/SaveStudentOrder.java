@@ -8,37 +8,20 @@ import ru.wasabi.domain.StudentOrder;
 public class SaveStudentOrder {
 
     public static void main(String[] args) {
-        buildStudentOrder();
-
         StudentOrder studentOrder = new StudentOrder();
         long answer = saveStudentOrder(studentOrder);
         log.info("Номер: {}", answer);
     }
 
-    static long saveStudentOrder(StudentOrder studentOrder) {
+    public static long saveStudentOrder(StudentOrder studentOrder) {
         long answer = 101;
         log.info("saveStudentOrder: ");
         return answer;
     }
 
-    static StudentOrder buildStudentOrder() {
+    public static StudentOrder buildStudentOrder(long id) {
         StudentOrder studentOrder = new StudentOrder();
-
-        Adult husband = new Adult();
-        husband.setFirstName("Петр");
-        husband.setLastName("Ветров");
-        husband.setPassportSeries("1234");
-        husband.setPassportNumber("56789");
-        String personString = husband.getPersonString();
-        log.info("{}", personString);
-        studentOrder.setHusband(husband);
-
-        Adult wife = new Adult();
-        wife.setFirstName("Карина");
-        wife.setLastName("Ветрова");
-        studentOrder.setWife(wife);
-
-
+        studentOrder.setStudentOrderId(id);
         return studentOrder;
     }
 }
