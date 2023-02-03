@@ -19,8 +19,8 @@ public class Adult extends Person {
     String university;
     String studentId;
 
-    @Override
-    public String getPersonString() {
-        return "ФИО: " + firstName + " " + lastName + "; Серия и номер паспорта: " + passportSeries + " " + passportNumber;
+
+    public Adult(String firstName, String lastName, String patronymic, LocalDate dateOfBirth) {
+        super(firstName, lastName, patronymic, dateOfBirth);
     }
 }

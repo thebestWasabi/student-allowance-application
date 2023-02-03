@@ -15,4 +15,8 @@ public class Child extends Person {
     String certificateNumber;
     LocalDate issueDate;
     String issueDepartment;
+
+    public Child(String firstName, String lastName, String patronymic, LocalDate dateOfBirth) {
+        super(firstName, lastName, patronymic, dateOfBirth);
+    }
 }
