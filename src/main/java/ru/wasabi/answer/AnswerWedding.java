@@ -1,4 +1,4 @@
-package ru.wasabi;
+package ru.wasabi.answer;
 
 public class AnswerWedding {
 

@@ -1,4 +1,4 @@
-package ru.wasabi;
+package ru.wasabi.domain;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -10,9 +10,9 @@ import lombok.experimental.FieldDefaults;
 @Setter
 public class StudentOrder {
 
-    String husbandFirstName;
-    String husbandLastName;
-    String wifeFirstName;
-    String wifeLastName;
+    long studentOrderId;
+    Adult husband;
+    Adult wife;
+    Child child;
 
 }

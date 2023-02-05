@@ -1,21 +1,34 @@
 package ru.wasabi;
 
+import lombok.extern.slf4j.Slf4j;
+import ru.wasabi.domain.Adult;
+import ru.wasabi.domain.StudentOrder;
+
+import java.time.LocalDate;
+
+@Slf4j
 public class SaveStudentOrder {
 
     public static void main(String[] args) {
-        StudentOrder studentOrder = new StudentOrder();
-        studentOrder.setHusbandFirstName("Пётр");
-        studentOrder.setHusbandLastName("Ветров");
-        studentOrder.setWifeFirstName("Карина");
-        studentOrder.setWifeLastName("Ветрова");
-
-        long answer = saveStudentOrder(studentOrder);
-        System.out.println(answer);
+        buildStudentOrder(10);
+//        StudentOrder studentOrder = new StudentOrder();
+//        long answer = saveStudentOrder(studentOrder);
+//        log.info("Номер: {}", answer);
     }
 
-    static long saveStudentOrder(StudentOrder studentOrder) {
-        long answer = 199;
-        System.out.println("saveStudentOrder: " + studentOrder.getHusbandLastName());
+    public static long saveStudentOrder(StudentOrder studentOrder) {
+        long answer = 101;
+        log.info("saveStudentOrder: ");
         return answer;
+    }
+
+    public static StudentOrder buildStudentOrder(long id) {
+        StudentOrder studentOrder = new StudentOrder();
+        studentOrder.setStudentOrderId(id);
+        return studentOrder;
+    }
+
+    static void printStudentOrder(StudentOrder studentOrder) {
+        log.info("{}", studentOrder.getStudentOrderId());
     }
 }
