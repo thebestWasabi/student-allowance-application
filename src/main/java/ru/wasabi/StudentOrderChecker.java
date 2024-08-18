@@ -5,8 +5,12 @@ import ru.wasabi.answer.AnswerChildren;
 import ru.wasabi.answer.AnswerCityRegister;
 import ru.wasabi.answer.AnswerStudent;
 import ru.wasabi.answer.AnswerWedding;
-import ru.wasabi.domain.*;
-import ru.wasabi.validator.*;
+import ru.wasabi.domain.StudentOrder;
+import ru.wasabi.validator.ChildrenValidator;
+import ru.wasabi.validator.CityRegisterValidator;
+import ru.wasabi.validator.MailSender;
+import ru.wasabi.validator.StudentValidator;
+import ru.wasabi.validator.WeddingValidator;
 
 @Slf4j
 public class StudentOrderChecker {
@@ -17,21 +21,21 @@ public class StudentOrderChecker {
     private final StudentValidator studentValidator;
     private final MailSender mailSender;
 
-    public StudentOrderChecker() {
-        this.cityRegisterValidator = new CityRegisterValidator();
-        this.weddingValidator = new WeddingValidator();
-        this.childrenValidator = new ChildrenValidator();
-        this.studentValidator = new StudentValidator();
-        this.mailSender = new MailSender();
-    }
-
-    public static void main(String[] args) {
-        StudentOrderChecker studentOrderChecker = new StudentOrderChecker();
-        studentOrderChecker.checkAll();
+    public StudentOrderChecker(final CityRegisterValidator cityRegisterValidator,
+                               final WeddingValidator weddingValidator,
+                               final ChildrenValidator childrenValidator,
+                               final StudentValidator studentValidator,
+                               final MailSender mailSender) {
+        this.cityRegisterValidator = cityRegisterValidator;
+        this.weddingValidator = weddingValidator;
+        this.childrenValidator = childrenValidator;
+        this.studentValidator = studentValidator;
+        this.mailSender = mailSender;
     }
 
     public void checkAll() {
         StudentOrder[] studentOrderArray = readStudentOrder();
+
         for (StudentOrder studentOrder : studentOrderArray) {
             checkOneOrder(studentOrder);
         }
@@ -39,13 +43,15 @@ public class StudentOrderChecker {
 
     private StudentOrder[] readStudentOrder() {
         StudentOrder[] studentOrderArray = new StudentOrder[3];
+
         for (int i = 0; i < studentOrderArray.length; i++) {
-            studentOrderArray[i] = SaveStudentOrder.buildStudentOrder(i);
+            studentOrderArray[i] = SaveStudentOrder.buildStudentOrder(i + 1);
         }
+
         return studentOrderArray;
     }
 
-    public void checkOneOrder(StudentOrder studentOrder) {
+    private void checkOneOrder(StudentOrder studentOrder) {
         AnswerCityRegister answerCityRegister = checkCityRegister(studentOrder);
         AnswerWedding answerWedding = checkWedding(studentOrder);
         AnswerChildren answerChildren = checkChildren(studentOrder);
