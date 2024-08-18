@@ -1,22 +1,18 @@
 package ru.wasabi.domain;
 
-import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 
-@FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
 @Setter
+@NoArgsConstructor
 public class Child extends Person {
 
-    String certificateNumber;
-    LocalDate issueDate;
-    String issueDepartment;
+    private String certificateNumber;
+    private LocalDate dateIssueCertificate;
+    private String issueDepartment;
 
-    public Child(String firstName, String lastName, String patronymic, LocalDate dateOfBirth) {
-        super(firstName, lastName, patronymic, dateOfBirth);
-    }
 }

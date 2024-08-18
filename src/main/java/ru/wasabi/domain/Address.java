@@ -1,19 +1,16 @@
 package ru.wasabi.domain;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.FieldDefaults;
 
-@FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
 @Setter
 public class Address {
 
-    String postCode;
-    String street;
-    String building;
-    String extension;
-    String apartment;
+    private String postCode;
+    private String street;
+    private String building;
+    private String extension;
+    private String apartment;
 
 }
