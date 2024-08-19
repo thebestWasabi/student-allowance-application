@@ -7,6 +7,8 @@ import lombok.Setter;
 import java.text.MessageFormat;
 import java.time.LocalDate;
 
+import static java.util.Objects.requireNonNull;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,14 +20,16 @@ public abstract class Person {
     protected LocalDate dateOfBirth;
     protected Address address;
 
-    public Person(final String firstName, final String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Person(final String firstName, final String lastName, final String patronymic,
+                  final LocalDate dateOfBirth) {
+        this.firstName = requireNonNull(firstName);
+        this.lastName = requireNonNull(lastName);
+        this.patronymic = requireNonNull(patronymic);
+        this.dateOfBirth = requireNonNull(dateOfBirth);
     }
 
-    public String getPersonString() {
-        return MessageFormat.format("{0}, {1}}",
-                firstName, lastName);
+    @Override
+    public String toString() {
+        return lastName;
     }
-
 }

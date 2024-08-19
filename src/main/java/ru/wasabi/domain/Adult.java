@@ -19,14 +19,25 @@ public class Adult extends Person {
     private String university;
     private String studentId;
 
+    public Adult(String firstName, String lastName, String patronymic, LocalDate dateOfBirth,
+                 String passportSeries, String passportNumber, LocalDate dateIssuePassport, String issueDepartment,
+                 String university, String studentId) {
+
+        super(firstName, lastName, patronymic, dateOfBirth);
+        this.passportSeries = passportSeries;
+        this.passportNumber = passportNumber;
+        this.dateIssuePassport = dateIssuePassport;
+        this.issueDepartment = issueDepartment;
+        this.university = university;
+        this.studentId = studentId;
+    }
+
+    public Adult(String firstName, String lastName, String patronymic, LocalDate dateOfBirth) {
+        super(firstName, lastName, patronymic, dateOfBirth);
+    }
+
     public String getAdultString() {
         return MessageFormat.format("{0}, {1}, {2} {3}",
                 firstName, lastName, passportSeries, passportNumber);
-    }
-
-    public Adult(String firstname, String lastname,final String passportSeries, final String passportNumber) {
-        super(firstname, lastname);
-        this.passportSeries = passportSeries;
-        this.passportNumber = passportNumber;
     }
 }
