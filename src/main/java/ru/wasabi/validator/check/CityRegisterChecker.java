@@ -1,4 +1,4 @@
-package ru.wasabi.validator;
+package ru.wasabi.validator.check;
 
 import ru.wasabi.domain.CityRegisterCheckerResponse;
 import ru.wasabi.domain.Person;

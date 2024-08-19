@@ -1,12 +1,15 @@
-package ru.wasabi.validator;
+package ru.wasabi.validator.check.impl;
 
 import ru.wasabi.domain.CityRegisterCheckerResponse;
 import ru.wasabi.domain.Person;
 import ru.wasabi.exception.CityRegisterException;
+import ru.wasabi.validator.check.CityRegisterChecker;
 
 public class FakeCityRegisterChecker implements CityRegisterChecker {
 
-    public CityRegisterCheckerResponse checkPerson(Person person) throws CityRegisterException {
+    public CityRegisterCheckerResponse checkPerson(Person person)
+            throws CityRegisterException {
+
         return null;
     }
 }

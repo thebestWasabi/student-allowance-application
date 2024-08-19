@@ -4,6 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import ru.wasabi.domain.Adult;
 import ru.wasabi.domain.StudentOrder;
 
+import java.time.LocalDate;
+import java.time.Month;
+
 @Slf4j
 public class SaveStudentOrder {
 
@@ -23,8 +26,8 @@ public class SaveStudentOrder {
 
     public static StudentOrder buildStudentOrder(final long id) {
         final StudentOrder studentOrder = new StudentOrder();
-        final Adult husband = new Adult("Петр", "Ветров", "1234", "56789");
-        final Adult wife = new Adult("Карина", "Ветрова", "4321", "56789");
+        final Adult husband = new Adult("Петр", "Ветров", "Отчество1", LocalDate.of(1982, Month.FEBRUARY, 22));
+        final Adult wife = new Adult("Карина", "Ветрова", "Отчество2", LocalDate.of(1982, Month.FEBRUARY, 22));
 
         studentOrder.setStudentOrderId(id);
         studentOrder.setHusband(husband);

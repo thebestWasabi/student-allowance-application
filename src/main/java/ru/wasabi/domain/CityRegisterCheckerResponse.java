@@ -8,6 +8,6 @@ import lombok.Setter;
 public class CityRegisterCheckerResponse {
 
     private boolean existing;
-    private Boolean temporal;
+    private Boolean temporaryRegistration;
 
 }

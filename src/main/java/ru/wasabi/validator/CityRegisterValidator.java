@@ -7,6 +7,7 @@ import ru.wasabi.answer.AnswerCityRegister;
 import ru.wasabi.domain.CityRegisterCheckerResponse;
 import ru.wasabi.domain.StudentOrder;
 import ru.wasabi.exception.CityRegisterException;
+import ru.wasabi.validator.check.CityRegisterChecker;
 
 @Slf4j
 @Getter
@@ -15,8 +16,8 @@ public class CityRegisterValidator {
 
     private CityRegisterChecker personChecker;
 
-    public CityRegisterValidator() {
-        this.personChecker = new FakeCityRegisterChecker();
+    public CityRegisterValidator(CityRegisterChecker personChecker) {
+        this.personChecker = personChecker;
     }
 
     public AnswerCityRegister checkCityRegister(StudentOrder studentOrder) {
@@ -26,8 +27,9 @@ public class CityRegisterValidator {
             CityRegisterCheckerResponse husbandAnswer = personChecker.checkPerson(studentOrder.getHusband());
             CityRegisterCheckerResponse wifeAnswer = personChecker.checkPerson(studentOrder.getWife());
             CityRegisterCheckerResponse childAnswer = personChecker.checkPerson(studentOrder.getChild());
-        } catch (CityRegisterException e) {
-            e.printStackTrace();
+        }
+        catch (CityRegisterException e) {
+            log.error("CityRegister error {}, {}", e.getMessage(), e.getStackTrace());
         }
 
         return new AnswerCityRegister();

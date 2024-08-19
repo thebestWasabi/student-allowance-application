@@ -12,6 +12,8 @@ import ru.wasabi.validator.MailSender;
 import ru.wasabi.validator.StudentValidator;
 import ru.wasabi.validator.WeddingValidator;
 
+import static java.util.Objects.requireNonNull;
+
 @Slf4j
 public class StudentOrderChecker {
 
@@ -26,52 +28,52 @@ public class StudentOrderChecker {
                                final ChildrenValidator childrenValidator,
                                final StudentValidator studentValidator,
                                final MailSender mailSender) {
-        this.cityRegisterValidator = cityRegisterValidator;
-        this.weddingValidator = weddingValidator;
-        this.childrenValidator = childrenValidator;
-        this.studentValidator = studentValidator;
-        this.mailSender = mailSender;
+        this.cityRegisterValidator = requireNonNull(cityRegisterValidator);
+        this.weddingValidator = requireNonNull(weddingValidator);
+        this.childrenValidator = requireNonNull(childrenValidator);
+        this.studentValidator = requireNonNull(studentValidator);
+        this.mailSender = requireNonNull(mailSender);
     }
 
     public void checkAll() {
-        StudentOrder[] studentOrderArray = readStudentOrder();
+        final StudentOrder[] studentOrderArray = readStudentOrders();
 
         for (StudentOrder studentOrder : studentOrderArray) {
             checkOneOrder(studentOrder);
         }
     }
 
-    private StudentOrder[] readStudentOrder() {
-        StudentOrder[] studentOrderArray = new StudentOrder[3];
+    private StudentOrder[] readStudentOrders() {
+        final StudentOrder[] studentOrderArray = new StudentOrder[5];
 
         for (int i = 0; i < studentOrderArray.length; i++) {
-            studentOrderArray[i] = SaveStudentOrder.buildStudentOrder(i + 1);
+            studentOrderArray[i] = SaveStudentOrder.buildStudentOrder(i);
         }
 
         return studentOrderArray;
     }
 
-    private void checkOneOrder(StudentOrder studentOrder) {
-        AnswerCityRegister answerCityRegister = checkCityRegister(studentOrder);
-        AnswerWedding answerWedding = checkWedding(studentOrder);
-        AnswerChildren answerChildren = checkChildren(studentOrder);
-        AnswerStudent answerStudent = checkStudent(studentOrder);
+    private void checkOneOrder(final StudentOrder studentOrder) {
+        final AnswerCityRegister answerCityRegister = checkCityRegister(studentOrder);
+        final AnswerWedding answerWedding = checkWedding(studentOrder);
+        final AnswerChildren answerChildren = checkChildren(studentOrder);
+        final AnswerStudent answerStudent = checkStudent(studentOrder);
         sendMail();
     }
 
-    private AnswerCityRegister checkCityRegister(StudentOrder studentOrder) {
+    private AnswerCityRegister checkCityRegister(final StudentOrder studentOrder) {
         return cityRegisterValidator.checkCityRegister(studentOrder);
     }
 
-    private AnswerWedding checkWedding(StudentOrder studentOrder) {
+    private AnswerWedding checkWedding(final StudentOrder studentOrder) {
         return weddingValidator.checkWedding(studentOrder);
     }
 
-    private AnswerChildren checkChildren(StudentOrder studentOrder) {
+    private AnswerChildren checkChildren(final StudentOrder studentOrder) {
         return childrenValidator.checkChildren(studentOrder);
     }
 
-    private AnswerStudent checkStudent(StudentOrder studentOrder) {
+    private AnswerStudent checkStudent(final StudentOrder studentOrder) {
         return studentValidator.checkStudent(studentOrder);
     }
 
